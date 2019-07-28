@@ -62,6 +62,7 @@ namespace Spectator.Widgets.Sidebar {
         public signal void selection_changed (Models.Request item);
         public signal void notify_delete ();
         public signal void create_collection_request (Models.Collection collection);
+        public signal void sort_collection_requests (Models.Collection model);
         public signal void collection_edit (Models.Collection collection);
         public signal void collection_delete (Models.Collection collection);
 
@@ -108,6 +109,10 @@ namespace Spectator.Widgets.Sidebar {
 
             collection.collection_delete.connect ((collection) => {
                 collection_delete (collection);
+            });
+
+            collection.sort_collection_requests.connect ((model) => {
+                sort_collection_requests (model);
             });
 
             stack = new Gtk.Stack ();

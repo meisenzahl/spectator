@@ -31,6 +31,7 @@ namespace Spectator.Widgets.Sidebar.Collection {
         public signal void collection_delete (Models.Collection collection);
         public signal void collection_edit (Models.Collection collection);
         public signal void create_collection_request (Models.Collection collection);
+        public signal void sort_collection_requests (Models.Collection model);
         public signal void active_item_changed (Item item);
 
         public Models.Collection collection { get; private set;}
@@ -196,6 +197,7 @@ namespace Spectator.Widgets.Sidebar.Collection {
                         var new_request_item = new Gtk.MenuItem.with_label (_("Add Request"));
                         var edit_item = new Gtk.MenuItem.with_label (_("Edit"));
                         var delete_item = new Gtk.MenuItem.with_label (_("Delete"));
+                        var sort_requests = new Gtk.MenuItem.with_label (_("Sort Requests"));
 
                         new_request_item.activate.connect (() => {
                             create_collection_request (model);
@@ -209,10 +211,15 @@ namespace Spectator.Widgets.Sidebar.Collection {
                             collection_delete (model);
                         });
 
-                        menu.add (new_request_item);
-                        menu.add (new Gtk.SeparatorMenuItem ());
+                        sort_requests.activate.connect (() => {
+                            sort_collection_requests (model);
+                        });
+
                         menu.add (edit_item);
                         menu.add (delete_item);
+                        menu.add (new Gtk.SeparatorMenuItem ());
+                        menu.add (new_request_item);
+                        menu.add (sort_requests);
                         menu.show_all ();
                         menu.popup_at_pointer (event);
                         result = true;

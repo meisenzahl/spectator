@@ -55,6 +55,10 @@ namespace Spectator.Controllers {
                 });
             });
 
+            sidebar.sort_collection_requests.connect ((model) => {
+                //
+            });
+
             sidebar.item_deleted.connect ((request) => {
                 main.remove_request (request);
                 sidebar.history_delete (request);

@@ -25,6 +25,7 @@ namespace Spectator.Widgets.Sidebar.Collection {
         public signal void item_deleted (Models.Request request);
         public signal void item_clicked (Item item);
         public signal void create_collection_request (Models.Collection collection);
+        public signal void sort_collection_requests (Models.Collection model);
         public signal void collection_edit (Models.Collection collection);
         public signal void collection_delete (Models.Collection collection);
 
@@ -124,6 +125,10 @@ namespace Spectator.Widgets.Sidebar.Collection {
 
             dropdown.create_collection_request.connect ((collection) => {
                 create_collection_request (collection);
+            });
+
+            dropdown.sort_collection_requests.connect ((model) => {
+                sort_collection_requests (model);
             });
 
             dropdown.collection_edit.connect ((collection) => {
