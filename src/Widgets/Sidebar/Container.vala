@@ -48,7 +48,8 @@ namespace Spectator.Widgets.Sidebar {
     }
 
     public class Container : Gtk.Box {
-        private Gtk.ScrolledWindow scroll;
+        private Gtk.ScrolledWindow scroll_history;
+        private Gtk.ScrolledWindow scroll_collection;
         private string collection_title_text = _("Collections");
         private string history_title_text = _("History");
         private Gtk.Stack stack;
@@ -66,9 +67,9 @@ namespace Spectator.Widgets.Sidebar {
         public signal void collection_delete (Models.Collection collection);
 
         public Container () {
-            scroll = new Gtk.ScrolledWindow (null, null);
-            scroll.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
-            scroll.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
+            scroll_history = new Gtk.ScrolledWindow (null, null);
+            scroll_history.hscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
+            scroll_history.vscrollbar_policy = Gtk.PolicyType.AUTOMATIC;
 
             titlebar = new TitleBar (collection_title_text);
 
@@ -78,7 +79,7 @@ namespace Spectator.Widgets.Sidebar {
             collection = new Collection.Container ();
             history = new History.Container ();
 
-            scroll.add (history);
+            scroll_history.add (history);
 
             collection.item_edit.connect ((request) => {
                 item_edited (request);
@@ -111,19 +112,21 @@ namespace Spectator.Widgets.Sidebar {
             });
 
             stack = new Gtk.Stack ();
-            stack.add_named (collection, "groups");
-            stack.add_named (scroll, "history");
+            scroll_collection = new Gtk.ScrolledWindow (null, null);
+            scroll_collection.add (collection);
+            stack.add_named (scroll_collection, "groups");
+            stack.add_named (scroll_history, "history");
 
-            stack.set_visible_child (collection);
+            stack.set_visible_child (scroll_collection);
 
             mode_buttons = create_mode_buttons ();
 
             mode_buttons.mode_changed.connect (() => {
                 if (mode_buttons.selected == 0) {
-                    stack.set_visible_child (collection);
+                    stack.set_visible_child (scroll_collection);
                     titlebar.title_text = collection_title_text;
                 } else {
-                    stack.set_visible_child (scroll);
+                    stack.set_visible_child (scroll_history);
                     titlebar.title_text = history_title_text;
                 }
             });
@@ -137,13 +140,13 @@ namespace Spectator.Widgets.Sidebar {
 
         public void show_history () {
             mode_buttons.selected = 1;
-            stack.set_visible_child (scroll);
+            stack.set_visible_child (scroll_history);
             titlebar.title_text = history_title_text;
         }
 
         public void show_collection () {
             mode_buttons.selected = 0;
-            stack.set_visible_child (collection);
+            stack.set_visible_child (scroll_collection);
             titlebar.title_text = collection_title_text;
         }
 
