@@ -46,6 +46,7 @@ executable(
 	'Dialogs/Request/UpdateDialog.vala',
 	'Dialogs/Collection/CreateCollection.vala',
 	'Dialogs/Collection/UpdateCollection.vala',
+	'Dialogs/Collection/SortRequests.vala',
 	'Dialogs/Alert.vala',
 	'Dialogs/Preferences.vala',
 	'Dialogs/Preference/General.vala',

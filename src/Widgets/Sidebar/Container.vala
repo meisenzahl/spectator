@@ -66,6 +66,7 @@ namespace Spectator.Widgets.Sidebar {
         public signal void create_collection_request (Models.Collection collection);
         public signal void collection_edit (Models.Collection collection);
         public signal void collection_delete (Models.Collection collection);
+        public signal void order_collection_requests (Models.Collection collection);
 
         public Container () {
             history_scroll = new Gtk.ScrolledWindow (null, null);
@@ -89,6 +90,10 @@ namespace Spectator.Widgets.Sidebar {
 
             collection.item_edit.connect ((request) => {
                 item_edited (request);
+            });
+
+            collection.order_collection_requests.connect ((collection) => {
+                order_collection_requests (collection);
             });
 
             collection.item_clone.connect ((request) => {

@@ -63,6 +63,11 @@ namespace Spectator.Controllers {
                 });
             });
 
+            sidebar.order_collection_requests.connect ((collection) => {
+                var dialog = new Dialogs.Collection.SortRequests (main.window, collection);
+                dialog.show_all ();
+            });
+
             sidebar.item_deleted.connect ((request) => {
                 main.remove_request (request);
                 sidebar.history_delete (request);

@@ -28,6 +28,7 @@ namespace Spectator.Widgets.Sidebar.Collection {
         public signal void create_collection_request (Models.Collection collection);
         public signal void collection_edit (Models.Collection collection);
         public signal void collection_delete (Models.Collection collection);
+        public signal void order_collection_requests (Models.Collection collection);
 
         public Item? active_item { get; private set; }
 
@@ -133,6 +134,10 @@ namespace Spectator.Widgets.Sidebar.Collection {
 
             dropdown.collection_edit.connect ((collection) => {
                 collection_edit (collection);
+            });
+
+            dropdown.order_collection_requests.connect (() => {
+                order_collection_requests (collection);
             });
 
             dropdown.collection_delete.connect ((collection) => {
